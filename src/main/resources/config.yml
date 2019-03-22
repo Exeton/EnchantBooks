@@ -1,0 +1,17 @@
+bookTiers:
+  common:
+    displayName: "&1Common"
+    xpCost: 450
+    paneColor: 0
+  uncommon:
+    displayName: "&2Uncommon"
+    xpCost: 600
+    paneColor: 5
+  rare:
+    displayName: "&3Rare"
+    xpCost: 750
+    paneColor: 3
+  dank:
+    displayName: "&4D&5A&6N&7K"
+    xpCost: 900
+    paneColor: 7

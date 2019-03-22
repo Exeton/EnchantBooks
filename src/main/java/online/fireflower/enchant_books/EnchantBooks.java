@@ -19,6 +19,7 @@ import online.fireflower.enchant_books.test_enchant.OneShotEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -33,7 +34,7 @@ public class EnchantBooks extends JavaPlugin {
 
     public static String enchantGuiName = "Enchanter";
     public static String xpCostString = ChatColor.YELLOW + "XP Cost: ";
-    private Random random;
+    private Random random = new Random();
 
     IEnchantBookInfoReadWriter enchantBookInfoReadWriter;
     IEnchanter enchanter;
@@ -44,29 +45,43 @@ public class EnchantBooks extends JavaPlugin {
     List<Byte> enchantColors = new LinkedList<>();
     List<String> enchantNames = new LinkedList<>();
 
+    List<String> tierDisplayNames = new LinkedList<>();
+    List<Integer> tierCosts = new LinkedList<>();
+
     @Override
     public void onEnable() {
 
-        random = new Random();
         registerGlow();
 
+        saveDefaultConfig();
+        registerTiers(getConfig().getConfigurationSection("bookTiers"));
+
+
         EasyEnchants.dependencyBuilder.addTask(() -> runDI(), 10);
-        registerBookTypes();
 
         BookCreator bookCreator = new BookCreator(typesAndBookNames);
         BookGiver bookGiver = new BookGiver(bookCreator);
         this.getCommand("giveBook").setExecutor(new GiveBookCommand(bookGiver));
-
-        List<Integer> bookCosts = new LinkedList<>();
-        bookCosts.add(400);
-        bookCosts.add(800);
-        bookCosts.add(2500);
-        bookCosts.add(10000);
-
-        this.getCommand("enchanter").setExecutor(new EnchanterCommand(enchantNames, enchantColors, bookCosts));
+        this.getCommand("enchanter").setExecutor(new EnchanterCommand(enchantNames, enchantColors, tierCosts));
 
         registerTestEnchants();
     }
+
+
+    private void registerTiers(ConfigurationSection config){
+
+        for (String key : config.getKeys(false)){
+            ConfigurationSection subSection = config.getConfigurationSection(key);
+            String name = subSection.getString("displayName");
+            int cost = subSection.getInt("xpCost");
+            int paneColor = subSection.getInt("paneColor");
+
+            tierDisplayNames.add(name);
+            tierCosts.add(cost);
+            registerBookType(key, name, (byte)paneColor);
+        }
+    }
+
 
     public void registerGlow() {
         try {
@@ -88,13 +103,6 @@ public class EnchantBooks extends JavaPlugin {
         }
     }
 
-    private void registerBookTypes(){
-
-        registerBookType("common", "&8&lCommon", (byte)0);
-        registerBookType("uncommon", "&2&aUncommon", (byte)5);
-        registerBookType("rare", "&b&lRare", (byte)3);
-        registerBookType("legendary", "&6&lLegendary", (byte)1);
-    }
 
     private void registerBookType(String ref, String type, Byte enchantColor){
 
@@ -122,18 +130,15 @@ public class EnchantBooks extends JavaPlugin {
     private void registerTestEnchants(){
 
         OneShotEnchant oneShotEnchant = new OneShotEnchant(ChatColor.translateAlternateColorCodes('&', "&7One Shot"), new Random());
-        registerEnchantAndEasyEnchant("common", "OneShot",  oneShotEnchant, new EnchantApplicationInfo(5, EnchantTypeGroup.WEAPONS));
+        registerBookAndEasyEnchant("common", "OneShot",  oneShotEnchant, new EnchantApplicationInfo(5, EnchantTypeGroup.WEAPONS));
     }
 
-    public static void registerEnchantAndEasyEnchant(String tier, String refName, Enchant enchant, EnchantApplicationInfo enchantApplicationInfo){
-        registerEnchant(enchant, tier, enchantApplicationInfo);
+    public static void registerBookAndEasyEnchant(String tier, String refName, Enchant enchant, EnchantApplicationInfo enchantApplicationInfo){
+        registerBook(enchant, tier, enchantApplicationInfo);
         EasyEnchants.registerEnchant(refName, enchant);
-        enchantNamesAndApplicationInfo.put(enchant.displayName, enchantApplicationInfo);
     }
 
-
-
-    public static void registerEnchant(Enchant enchant, String tier, EnchantApplicationInfo enchantApplicationInfo){
+    public static void registerBook(Enchant enchant, String tier, EnchantApplicationInfo enchantApplicationInfo){
 
         if (!typesAndEnchants.containsKey(tier)){
             typesAndEnchants.put(tier, new LinkedList<>());
@@ -141,6 +146,7 @@ public class EnchantBooks extends JavaPlugin {
 
         List<Enchant> enchants = typesAndEnchants.get(tier);
         enchants.add(enchant);
+        enchantNamesAndApplicationInfo.put(enchant.displayName, enchantApplicationInfo);
     }
 
     public static void giveOrDrop(Player player, ItemStack item){

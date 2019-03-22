@@ -44,15 +44,12 @@ public class EnchanterCommand implements CommandExecutor {
         Inventory inventory = Bukkit.createInventory(null, 9, EnchantBooks.enchantGuiName);
         ItemStack fillerPane = getEmptyPane(15);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 9; i++)
             inventory.setItem(i, fillerPane);
 
-        for (int i = 0; i < enchantBookTypes.size() - 1; i++)
-            inventory.addItem(getColoredPane(enchantBookTypes.get(i), enchantColors.get(i), bookCosts.get(i)));
-
-
-        for (int i = 0; i < 2; i++)
-            inventory.setItem(7 + i, fillerPane);
+        int startingIndex = (9 - enchantBookTypes.size()) / 2;
+        for (int i = 0; i < enchantBookTypes.size(); i++)
+            inventory.setItem(startingIndex + i, getColoredPane(enchantBookTypes.get(i), enchantColors.get(i), bookCosts.get(i)));
 
         return inventory;
     }
