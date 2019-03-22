@@ -1,0 +1,16 @@
+main: online.fireflower.enchant_books.EnchantBooks
+author: Fire
+version: 1.0
+name: EnchantBooks
+description: An enchant books plugin
+commands:
+  giveBook:
+    description: Used to giveBooks
+    permission: EasyEnchants.giveBook
+    permission-message: You need permission EasyEnchants.giveBook
+    usage: /Givebook <player> type
+  enchanter:
+    description: Used to buy enchant books
+    permission: EasyEnchants.enchanter
+    permission-message: You need permission EasyEnchants.enchanter
+    usage: /enchanter

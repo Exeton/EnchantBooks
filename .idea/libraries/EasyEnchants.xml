@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="EasyEnchants">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../Spigot 1.8.8/plugins/EasyEnchants.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
