@@ -7,12 +7,10 @@ import online.fireflower.easy_enchants.events.player_damage_player.PlayerDamageE
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 
-import java.util.Random;
-
 public class OneShotEnchant extends RandomEnchant {
 
-    public OneShotEnchant(String displayName, Random random) {
-        super(displayName, random);
+    public OneShotEnchant(String displayName) {
+        super(displayName);
     }
 
 

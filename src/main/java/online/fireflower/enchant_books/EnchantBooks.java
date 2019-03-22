@@ -129,7 +129,7 @@ public class EnchantBooks extends JavaPlugin {
 
     private void registerTestEnchants(){
 
-        OneShotEnchant oneShotEnchant = new OneShotEnchant(ChatColor.translateAlternateColorCodes('&', "&4O&3n&6e &cS&eh&4o&3t"), new Random());
+        OneShotEnchant oneShotEnchant = new OneShotEnchant(ChatColor.translateAlternateColorCodes('&', "&4O&3n&6e &cS&eh&4o&3t"));
         registerBookAndEasyEnchant("dank", "OneShot",  oneShotEnchant, new EnchantApplicationInfo(5, EnchantTypeGroup.WEAPONS));
     }
 
