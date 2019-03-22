@@ -3,6 +3,8 @@ author: Fire
 version: 1.0
 name: EnchantBooks
 description: An enchant books plugin
+depend:
+  - EasyEnchants
 commands:
   giveBook:
     description: Used to giveBooks

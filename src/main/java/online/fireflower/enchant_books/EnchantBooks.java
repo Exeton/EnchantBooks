@@ -14,6 +14,8 @@ import online.fireflower.enchant_books.enchant_books.book_creation.BasicEnchante
 import online.fireflower.enchant_books.enchant_books.book_creation.BookCreator;
 import online.fireflower.enchant_books.enchant_books.book_creation.BookGiver;
 import online.fireflower.enchant_books.enchant_books.book_creation.IEnchanter;
+import online.fireflower.enchant_books.enchant_item_types.EnchantTypeGroup;
+import online.fireflower.enchant_books.test_enchant.OneShotEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -63,6 +65,7 @@ public class EnchantBooks extends JavaPlugin {
 
         this.getCommand("enchanter").setExecutor(new EnchanterCommand(enchantNames, enchantColors, bookCosts));
 
+        registerTestEnchants();
     }
 
     public void registerGlow() {
@@ -116,7 +119,13 @@ public class EnchantBooks extends JavaPlugin {
         pluginManager.registerEvents(new EnchanterGUIListener(new BookCreator(typesAndBookNames)), this);
     }
 
-    public static void registerEnchant(String tier, String refName, Enchant enchant, EnchantApplicationInfo enchantApplicationInfo){
+    private void registerTestEnchants(){
+
+        OneShotEnchant oneShotEnchant = new OneShotEnchant(ChatColor.translateAlternateColorCodes('&', "&7One Shot"), new Random());
+        registerEnchantAndEasyEnchant("common", "OneShot",  oneShotEnchant, new EnchantApplicationInfo(5, EnchantTypeGroup.WEAPONS));
+    }
+
+    public static void registerEnchantAndEasyEnchant(String tier, String refName, Enchant enchant, EnchantApplicationInfo enchantApplicationInfo){
         registerEnchant(enchant, tier, enchantApplicationInfo);
         EasyEnchants.registerEnchant(refName, enchant);
         enchantNamesAndApplicationInfo.put(enchant.displayName, enchantApplicationInfo);
@@ -151,7 +160,6 @@ public class EnchantBooks extends JavaPlugin {
             if (inventory.getItem(i) == null || inventory.getItem(i).getType() == Material.AIR)
                 return i;
         }
-
         return -1;
     }
 

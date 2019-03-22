@@ -1,7 +1,5 @@
 package online.fireflower.enchant_books.enchant_books;
 
-import org.bukkit.inventory.ItemStack;
-
 import java.util.List;
 
 public interface ISuccessRateParser {
