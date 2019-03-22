@@ -1,10 +1,12 @@
-package online.fireflower.enchant_books.enchant_books;
+package online.fireflower.enchant_books;
 
 import me.Test.hammy2899.glow.Glow;
 import online.fireflower.easy_enchants.enchant_parsing.EnchantInfo;
 import online.fireflower.easy_enchants.enchant_parsing.IEnchantInfoParser;
 import online.fireflower.easy_enchants.enchant_parsing.IEnchantReadWriter;
 import online.fireflower.enchant_books.EnchantApplicationInfo;
+import online.fireflower.enchant_books.enchant_books.EnchantBookInfo;
+import online.fireflower.enchant_books.enchant_books.IEnchantBookInfoReadWriter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -53,7 +55,11 @@ public class EnchantBookApplicationListener implements Listener {
         event.setCancelled(true);
 
         event.setCurrentItem(currentItem);
-        event.setCursor(new ItemStack(Material.AIR , 1));
+
+        if (enchantBook.getAmount() > 1)
+            enchantBook.setAmount(enchantBook.getAmount() - 1);
+        else
+            event.setCursor(new ItemStack(Material.AIR , 1));
     }
 
     private boolean shouldApply(EnchantInfo enchantInfo, ItemStack itemStack){

@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -20,6 +19,7 @@ public class EnchanterCommand implements CommandExecutor {
     List<String> enchantBookTypes;
     List<Byte> enchantColors;
     List<Integer> bookCosts;
+    static Inventory enchanterInventory;
 
     public EnchanterCommand(List<String> enchantBookTypes, List<Byte> enchantColors, List<Integer> bookCosts){
         this.enchantBookTypes = enchantBookTypes;
@@ -40,6 +40,13 @@ public class EnchanterCommand implements CommandExecutor {
     }
 
     private Inventory getInventory(){
+        if (enchanterInventory == null)
+            enchanterInventory = createInventory();
+
+        return enchanterInventory;
+    }
+
+    private Inventory createInventory(){
 
         Inventory inventory = Bukkit.createInventory(null, 9, EnchantBooks.enchantGuiName);
         ItemStack fillerPane = getEmptyPane(15);
@@ -77,5 +84,4 @@ public class EnchanterCommand implements CommandExecutor {
 
         return pane;
     }
-
 }

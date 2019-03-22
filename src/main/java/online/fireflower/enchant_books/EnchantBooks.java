@@ -8,7 +8,6 @@ import online.fireflower.enchant_books.commands.EnchanterCommand;
 import online.fireflower.enchant_books.commands.GiveBookCommand;
 import online.fireflower.enchant_books.enchant_books.BasicEnchantBookInfoReadWriter;
 import online.fireflower.enchant_books.enchant_books.BasicSuccessRateParser;
-import online.fireflower.enchant_books.enchant_books.EnchantBookApplicationListener;
 import online.fireflower.enchant_books.enchant_books.IEnchantBookInfoReadWriter;
 import online.fireflower.enchant_books.enchant_books.book_creation.BasicEnchanter;
 import online.fireflower.enchant_books.enchant_books.book_creation.BookCreator;
@@ -55,7 +54,6 @@ public class EnchantBooks extends JavaPlugin {
 
         saveDefaultConfig();
         registerTiers(getConfig().getConfigurationSection("bookTiers"));
-
 
         EasyEnchants.dependencyBuilder.addTask(() -> runDI(), 10);
 
