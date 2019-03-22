@@ -31,6 +31,8 @@ import java.util.*;
 
 public class EnchantBooks extends JavaPlugin {
 
+    public static EnchantBooks instance;
+
     public static String enchantGuiName = "Enchanter";
     public static String xpCostString = ChatColor.YELLOW + "XP Cost: ";
     private Random random = new Random();
@@ -50,6 +52,7 @@ public class EnchantBooks extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        instance = this;
         registerGlow();
 
         saveDefaultConfig();
@@ -101,14 +104,13 @@ public class EnchantBooks extends JavaPlugin {
         }
     }
 
+    public static void registerBookType(String ref, String tierName, Byte enchantPaneColor){
 
-    private void registerBookType(String ref, String type, Byte enchantColor){
+        String enchantName = ChatColor.translateAlternateColorCodes('&', tierName + " Enchant Book");
 
-        String enchantName = ChatColor.translateAlternateColorCodes('&', type + " Enchant Book");
-
-        typesAndBookNames.put(ref.toLowerCase(), enchantName);
-        enchantColors.add(enchantColor);
-        enchantNames.add(enchantName);
+        instance.typesAndBookNames.put(ref.toLowerCase(), enchantName);
+        instance.enchantColors.add(enchantPaneColor);
+        instance.enchantNames.add(enchantName);
     }
 
     private void runDI(){
@@ -127,8 +129,8 @@ public class EnchantBooks extends JavaPlugin {
 
     private void registerTestEnchants(){
 
-        OneShotEnchant oneShotEnchant = new OneShotEnchant(ChatColor.translateAlternateColorCodes('&', "&7One Shot"), new Random());
-        registerBookAndEasyEnchant("common", "OneShot",  oneShotEnchant, new EnchantApplicationInfo(5, EnchantTypeGroup.WEAPONS));
+        OneShotEnchant oneShotEnchant = new OneShotEnchant(ChatColor.translateAlternateColorCodes('&', "&4O&3n&6e &cS&eh&4o&3t"), new Random());
+        registerBookAndEasyEnchant("dank", "OneShot",  oneShotEnchant, new EnchantApplicationInfo(5, EnchantTypeGroup.WEAPONS));
     }
 
     public static void registerBookAndEasyEnchant(String tier, String refName, Enchant enchant, EnchantApplicationInfo enchantApplicationInfo){
