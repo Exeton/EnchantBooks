@@ -19,5 +19,5 @@ registerBookAndEasyEnchant(String tier, String refName, Enchant enchant, Enchant
 registerBook(Enchant enchant, String tier, EnchantApplicationInfo enchantApplicationInfo)
 
 //Registers a book tier
-public static void registerBookType(String ref, String tierName, Byte enchantPaneColor)
+void registerBookType(String ref, String tierName, Byte enchantPaneColor)
 ```
