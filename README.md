@@ -9,4 +9,15 @@ This plugin adds the /Enchanter command which can be used to purchase enchant bo
 ![alt text](https://github.com/Exeton/EnchantBooks/blob/master/Pictures/Enchant%20Book%20With%20Odds.PNG)
 
 ## Developer Information
+The API provides 3 main methods for adding enchants. These methods are static voids inside the EnchantBooks class.  **Be sure to use the tiers ref name when registering enchant books of a given tier. **
 
+```java
+//Registers an Enchant for  this plugin (EnchantBooks) and EasyEnchants
+registerBookAndEasyEnchant(String tier, String refName, Enchant enchant, EnchantApplicationInfo enchantApplicationInfo)
+
+//Registers a book just for EnchantBooks
+registerBook(Enchant enchant, String tier, EnchantApplicationInfo enchantApplicationInfo)
+
+//Registers a book tier
+public static void registerBookType(String ref, String tierName, Byte enchantPaneColor)
+```
